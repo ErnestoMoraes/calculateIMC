@@ -1,4 +1,5 @@
 import 'package:calca_imc/setState/imc_setstate_page.dart';
+import 'package:calca_imc/value_notifier/value_notifier_page.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -28,7 +29,10 @@ class HomePage extends StatelessWidget {
               child: const Text('SetState'),
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () => _goToPage(
+                context,
+                const ValueNotifierPage(),
+              ),
               child: const Text('Value Notifier'),
             ),
             ElevatedButton(
