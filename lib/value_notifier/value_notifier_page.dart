@@ -15,16 +15,12 @@ class _ValueNotifierPageState extends State<ValueNotifierPage> {
   final pesoEC = TextEditingController();
   final alturaEC = TextEditingController();
   final formKey = GlobalKey<FormState>();
-  var imc = 0.0;
+  var imc = ValueNotifier(0.0);
 
   Future<void> _calcIMC({required double peso, required double altura}) async {
-    setState(() {
-      imc = 0;
-    });
+    imc.value = 0;
     await Future.delayed(const Duration(seconds: 1));
-    setState(() {
-      imc = peso / pow(altura, 2);
-    });
+    imc.value = peso / pow(altura, 2);
   }
 
   @override
@@ -36,6 +32,7 @@ class _ValueNotifierPageState extends State<ValueNotifierPage> {
 
   @override
   Widget build(BuildContext context) {
+    print('build tela');
     return Scaffold(
       appBar: AppBar(
         title: const Text('IMC - SetSate'),
@@ -48,7 +45,13 @@ class _ValueNotifierPageState extends State<ValueNotifierPage> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                ImcGauge(imc: imc),
+                ValueListenableBuilder<double>(
+                  valueListenable: imc,
+                  builder: (context, imcValue, __) {
+                    print('build value notifier');
+                    return ImcGauge(imc: imcValue);
+                  },
+                ),
                 const SizedBox(height: 20),
                 TextFormField(
                     controller: pesoEC,
